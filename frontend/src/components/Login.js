@@ -48,6 +48,7 @@ function Login() {
                     required
                 />
                 <button type="submit">Login</button>
+                <p style={{ color: 'black' }}>Don't have an account? <a href="/register">Register</a></p>
             </form>
             {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>

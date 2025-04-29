@@ -5,13 +5,14 @@ import AssignmentList from './components/AssignmentList';
 import Calculate from './components/Calculate';
 import Login from './components/Login';
 import './App.css';
+import Register from './components/Register';
 
 function App() {
 
   const [showHeader, setShowHeader] = useState(true);
 
   useEffect(() => {
-    if (window.location.pathname === '/') {
+    if (window.location.pathname === '/' || window.location.pathname === '/register') {
       setShowHeader(false);
     } else {
       setShowHeader(true);
@@ -46,6 +47,7 @@ function App() {
           {/* Routes */}
           <Routes>
             <Route path="/" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/courses" element={<CourseList />} />
             <Route path="/assignments" element={<AssignmentList />} />
             <Route path="/calculate" element={<Calculate />} />
