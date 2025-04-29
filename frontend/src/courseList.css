@@ -1,0 +1,62 @@
+/* src/components/CourseList.css */
+.course-list {
+    padding: 20px;
+}
+
+.add-course-form {
+    margin-bottom: 20px;
+}
+
+.add-course-form input {
+    padding: 10px;
+    margin-right: 10px;
+    width: 200px;
+}
+
+.add-course-form button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.add-course-form button:hover {
+    background-color: #45a049;
+}
+
+.course-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.course-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.course-card h3 {
+    margin-top: 0;
+}
+
+.course-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.course-actions button {
+    padding: 5px 10px;
+    background-color: #ff5733;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.course-actions button:hover {
+    background-color: #e84921;
+}

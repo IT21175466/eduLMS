@@ -19,8 +19,8 @@ function Login() {
             const data = await response.json();
 
             if (data.token) {
-                localStorage.setItem('token', data.token);  // Store the JWT token
-                navigate('/courses');  // Redirect to the courses page
+                localStorage.setItem('token', data.token);
+                navigate('/courses');
             } else {
                 setError('Invalid credentials');
             }

@@ -8,8 +8,8 @@ function AssignmentList() {
     useEffect(() => {
         const fetchAssignments = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/assignments', {
-                    headers: { Authorization: `Bearer ${token}` },
+                const response = await fetch('http://localhost:5000/api/getAllAssignments', {
+                    headers: { authorization: `${token}` },
                 });
                 const data = await response.json();
                 setAssignments(data);
