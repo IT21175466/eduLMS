@@ -73,6 +73,9 @@ function CourseList() {
 
     // Handle opening the modal to update a course
     const openUpdateModal = (course) => {
+        setNewCourseTitle(course.title);
+        setNewCourseDescription(course.description);
+        setNewCourseModules(course.modules);
         setCourseToUpdate(course); // Set course to be updated
         setIsModalOpen(true); // Open modal
     };
@@ -81,11 +84,14 @@ function CourseList() {
     const closeModal = () => {
         setIsModalOpen(false);
         setCourseToUpdate(null);
+        setNewCourseTitle('');
+        setNewCourseDescription('');
+        setNewCourseModules('');
     };
 
     // Handle updating a course
     const handleUpdateCourse = async () => {
-        const updatedCourse = { title: newCourseTitle, description: newCourseDescription };
+        const updatedCourse = { title: newCourseTitle, description: newCourseDescription, modules: newCourseModules };
         try {
             const response = await fetch('http://localhost:5000/api/course', {
                 method: 'PUT',
@@ -98,6 +104,9 @@ function CourseList() {
             const data = await response.json();
             setCourses(courses.map(course => (course._id === courseToUpdate._id ? data.course : course)));
             closeModal(); // Close the modal after updating
+            setNewCourseTitle('');
+            setNewCourseDescription('');
+            setNewCourseModules('');
         } catch (error) {
             console.error('Error updating course:', error);
         }
