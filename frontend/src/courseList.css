@@ -60,3 +60,31 @@
 .course-actions button:hover {
     background-color: #e84921;
 }
+
+.course-actions button.delete-btn {
+    width: 100px;
+    padding: 5px 10px;
+    background-color: #ff5733;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.course-actions button.delete-btn:hover {
+    background-color: #e84921;
+}
+
+.course-actions button.update-btn {
+    width: 100px;
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.course-actions button.update-btn:hover {
+    background-color: #218838;
+}

@@ -2,7 +2,7 @@
 .login-container {
     max-width: 400px;
     margin: 50px auto;
-    padding: 20px;
+    padding: 30px;
     border: 1px solid #ccc;
     border-radius: 10px;
 }
@@ -13,7 +13,7 @@
 }
 
 .login-container input {
-    width: 100%;
+    width: 94.5%;
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
@@ -23,6 +23,7 @@
 .login-container button {
     width: 100%;
     padding: 10px;
+    margin-top: 10px;
     background-color: #4CAF50;
     color: white;
     border: none;

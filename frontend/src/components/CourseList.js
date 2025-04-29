@@ -23,6 +23,7 @@ function CourseList() {
                 });
                 const data = await response.json();
                 setCourses(data);
+                //window.location.reload();
             } catch (error) {
                 console.error('Error fetching courses:', error);
             }
@@ -30,6 +31,8 @@ function CourseList() {
 
         fetchCourses();
     }, [token]);
+
+
 
     // Handle adding a new course
     const handleAddCourse = async () => {
@@ -56,18 +59,22 @@ function CourseList() {
 
     // Handle deleting a course
     const handleDeleteCourse = async (courseId) => {
-        try {
-            await fetch('http://localhost:5000/api/course', {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    authorization: `${token}`,
-                },
-                body: JSON.stringify({ courseId }),
-            });
-            setCourses(courses.filter(course => course._id !== courseId));
-        } catch (error) {
-            console.error('Error deleting course:', error);
+        const isConfirmed = window.confirm('Are you sure you want to delete this course?');  // Confirm dialog
+
+        if (isConfirmed) {
+            try {
+                await fetch('http://localhost:5000/api/course', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        authorization: `${token}`,
+                    },
+                    body: JSON.stringify({ courseId }),
+                });
+                setCourses(courses.filter(course => course._id !== courseId));  // Remove course from list
+            } catch (error) {
+                console.error('Error deleting course:', error);
+            }
         }
     };
 
@@ -147,8 +154,8 @@ function CourseList() {
                         <p>{course.description}</p>
                         <p><strong>Modules:</strong> {course.modules.join(', ')}</p>
                         <div className="course-actions">
-                            <button onClick={() => openUpdateModal(course)}>Update</button>
-                            <button onClick={() => handleDeleteCourse(course._id)}>Delete</button>
+                            <button className="update-btn" onClick={() => openUpdateModal(course)}>Update</button>
+                            <button className="delete-btn" onClick={() => handleDeleteCourse(course._id)}>Delete</button>
                         </div>
                     </div>
                 ))}
