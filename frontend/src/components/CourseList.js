@@ -148,7 +148,7 @@ function CourseList() {
 
             {/* Course Cards */}
             <div className="course-cards">
-                {courses.map((course) => (
+                {courses.length > 0 ? (courses.map((course) => (
                     <div className="course-card" key={course._id}>
                         <h3>{course.title}</h3>
                         <p>{course.description}</p>
@@ -158,7 +158,10 @@ function CourseList() {
                             <button className="delete-btn" onClick={() => handleDeleteCourse(course._id)}>Delete</button>
                         </div>
                     </div>
-                ))}
+                ))
+                ) : (
+                    <p>No courses found</p>
+                )}
             </div>
 
             {/* Modal for Course Update */}

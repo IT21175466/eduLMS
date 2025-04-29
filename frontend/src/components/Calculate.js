@@ -38,7 +38,7 @@ function Calculate() {
 
     return (
         <div className="calculate">
-            <h2>Perform Course Fee Calculation</h2>
+            <h2>Course Fee Calculator</h2>
 
             <form onSubmit={handleCalculate} className="calc-form">
                 <div className="input-group">
