@@ -10,13 +10,21 @@ function Calculate() {
     const [operation, setOperation] = useState('courseFee');
     const [result, setResult] = useState(null);
 
+    const [error, setError] = useState('');
+
     // Handle calculation based on the selected operation
     const handleCalculate = (e) => {
         e.preventDefault();
         let calculationResult = null;
+        setError('');
 
         // 1. Calculate Course Fee Based on Duration
         if (operation === 'courseFee') {
+            if (num2 <= 0) {
+                setResult(null);
+                setError('Please enter valid duration in Weeks');
+                return;
+            }
             calculationResult = parseFloat(num1) * parseFloat(num2);
         }
         // 2. Calculate Discounted Course Fee
@@ -26,10 +34,34 @@ function Calculate() {
         // 3. Calculate Total Course Fee with Additional Charges
         else if (operation === 'totalFee') {
             let additionalFeesArray = additionalFees.split(',').map(fee => parseFloat(fee.trim()));
+
+            const invalidFees = additionalFeesArray.some(fee => {
+                fee = String(fee).trim();
+                return isNaN(fee) || fee === '' || fee.includes(' ') || fee.includes(';') || fee.includes('"') || fee.includes('/'); // Check for forbidden characters and invalid format
+            });
+
+            // Check for invalid commas, e.g., leading or trailing commas, or consecutive commas
+            if (additionalFees.includes(',,') || additionalFees.startsWith(',') || additionalFees.endsWith(',')) {
+                setError('Invalid format: Please avoid leading, trailing, or consecutive commas.');
+                setResult(null);
+                return;
+            }
+
+            if (invalidFees) {
+                setError('Please enter valid numbers for additional fees, separated by commas (e.g., 50, 30, 20), without semicolons, slashes, or quotes.');
+                setResult(null);
+                return;
+            }
+
             calculationResult = parseFloat(courseFee) + additionalFeesArray.reduce((acc, fee) => acc + fee, 0);
         }
         // 4. Calculate Installment Fee
         else if (operation === 'installments') {
+            if (installments <= 0) {
+                setResult(null);
+                setError('Please Enter valid number of installments');
+                return;
+            }
             calculationResult = parseFloat(courseFee) / parseFloat(installments);
         }
 
@@ -45,11 +77,17 @@ function Calculate() {
                     <label>Operation:</label>
                     <select
                         value={operation}
-                        onChange={(e) => setOperation(e.target.value)}
+                        onChange={(e) => {
+                            setNum1('');
+                            setNum2('');
+                            setCourseFee('');
+                            setAdditionalFees('');
+                            setDiscountPercentage('');
+                            setInstallments(''); setResult(null); setError(''); setOperation(e.target.value);
+                        }}
                     >
                         <option value="courseFee">Calculate Course Fee (Duration)</option>
                         <option value="discount">Discounted Course Fee</option>
-                        <option value="totalFee">Total Fee with Additional Charges</option>
                         <option value="installments">Installment Fee</option>
                     </select>
                 </div>
@@ -112,7 +150,7 @@ function Calculate() {
                             type="text"
                             value={additionalFees}
                             onChange={(e) => setAdditionalFees(e.target.value)}
-                            placeholder="Enter additional fees (e.g., material, lab)"
+                            placeholder="Enter additional fees (e.g., 50, 80, 30)"
                             required
                         />
                     </div>
@@ -142,12 +180,15 @@ function Calculate() {
                 <button type="submit" className="calc-btn">Calculate</button>
             </form>
 
+            {error && <p className="error-message">{error}</p>}
+
             {result !== null && (
                 <div className="result-container">
                     <h3>Result: </h3>
                     <p className="result">{result}</p>
                 </div>
             )}
+
         </div>
     );
 }

@@ -93,6 +93,7 @@ function CourseList() {
         setNewCourseModules(course.modules);
         setCourseToUpdate(course); // Set course to be updated
         setIsModalOpen(true); // Open modal
+        setErrorMessage('');
     };
 
     // Handle closing the modal
@@ -102,6 +103,7 @@ function CourseList() {
         setNewCourseTitle('');
         setNewCourseDescription('');
         setNewCourseModules('');
+        setErrorMessage('');
     };
 
     // Handle updating a course
