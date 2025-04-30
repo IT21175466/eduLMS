@@ -6,6 +6,7 @@ import Calculate from './components/Calculate';
 import Login from './components/Login';
 import './App.css';
 import Register from './components/Register';
+import NotiesList from './components/NotiesList';
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
                 <li><Link to="/courses">Courses</Link></li>
                 <li><Link to="/assignments">Assignments</Link></li>
                 <li><Link to="/calculate">Calculate</Link></li>
+                <li><Link to="/noties">Noties</Link></li>
               </ul>
             </nav>
             {/* Logout Button */}
@@ -51,6 +53,7 @@ function App() {
             <Route path="/courses" element={<CourseList />} />
             <Route path="/assignments" element={<AssignmentList />} />
             <Route path="/calculate" element={<Calculate />} />
+            <Route path="/noties" element={<NotiesList />} />
           </Routes>
         </div>
       </div>
