@@ -75,6 +75,11 @@
     background-color: #e84921;
 }
 
+.error-message {
+    color: red;
+    margin-bottom: 10px;
+}
+
 .course-actions button.update-btn {
     width: 100px;
     padding: 5px 10px;

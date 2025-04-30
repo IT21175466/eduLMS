@@ -13,6 +13,8 @@ function AssignmentList() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [assignmentToUpdate, setAssignmentToUpdate] = useState(null);
 
+    const [errorMessage, setErrorMessage] = useState('');
+
     // Fetch assignments from the backend
     useEffect(() => {
         const fetchAssignments = async () => {
@@ -56,6 +58,13 @@ function AssignmentList() {
 
     // Handle updating an assignment
     const handleUpdateAssignment = async () => {
+
+        if (!newAssignmentTitle || !newAssignmentDescription || !newAssignmentDuedate) {
+            setErrorMessage('Please fill in all fields before updating the assignment.');
+            return;
+        }
+        setErrorMessage('');
+
         const updatedAssignment = { title: newAssignmentTitle, description: newAssignmentDescription, dueDate: newAssignmentDuedate };
         try {
             const response = await fetch('http://localhost:5000/api/assignment', {
@@ -75,6 +84,13 @@ function AssignmentList() {
     };
 
     const handleAddAssignment = async () => {
+
+        if (!newAssignmentTitle || !newAssignmentDescription || !newAssignmentDuedate) {
+            setErrorMessage('Please fill in all fields before adding the assignment.');
+            return;
+        }
+        setErrorMessage('');
+
         const newAssignment = { title: newAssignmentTitle, description: newAssignmentDescription, dueDate: newAssignmentDuedate };
         try {
             const response = await fetch('http://localhost:5000/api/assignment', {
@@ -120,6 +136,8 @@ function AssignmentList() {
                 />
                 <button onClick={handleAddAssignment}>Add Assignment</button>
             </div>
+
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
 
             <div className="assignment-cards">
                 {assignments.length > 0 ? (
@@ -167,10 +185,15 @@ function AssignmentList() {
                                 placeholder="New Assignment Due Date"
                                 style={customStyles.input}
                             />
+
+                            {errorMessage && <p className="error-message">{errorMessage}</p>}
+
                             <div style={customStyles.buttonContainer}>
                                 <button onClick={() => handleUpdateAssignment(newAssignmentTitle, newAssignmentDescription, newAssignmentDuedate)} style={customStyles.button}>Update Assignment</button>
                                 <button onClick={closeModal} style={customStyles.cancelButton}>Cancel</button>
                             </div>
+
+
                         </>
                     )}
                 </div>

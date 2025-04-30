@@ -13,6 +13,8 @@ function NotiesList() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [notiesToUpdate, setNotiesToUpdate] = useState(null);
 
+    const [errorMessage, setErrorMessage] = useState('');
+
     // Fetch Notises from the backend
     useEffect(() => {
         const fetchNotises = async () => {
@@ -56,6 +58,13 @@ function NotiesList() {
 
     // Handle updating an noties
     const handleUpdateNoties = async () => {
+
+        if (!newNotiesTitle || !newNotiesDescription || !newNewNotiesCategory) {
+            setErrorMessage('Please fill in all fields before updating the notice.');
+            return;
+        }
+        setErrorMessage('');
+
         const updatedNoties = { title: newNotiesTitle, description: newNotiesDescription, category: newNewNotiesCategory };
         try {
             const response = await fetch('http://localhost:5000/api/noties', {
@@ -101,6 +110,13 @@ function NotiesList() {
     };
 
     const handleAddNoties = async () => {
+
+        if (!newNotiesTitle || !newNotiesDescription || !newNewNotiesCategory) {
+            setErrorMessage('Please fill in all fields before adding the notice.');
+            return;
+        }
+        setErrorMessage('');
+
         const newNoties = { title: newNotiesTitle, description: newNotiesDescription, category: newNewNotiesCategory };
         try {
             const response = await fetch('http://localhost:5000/api/noties', {
@@ -146,6 +162,8 @@ function NotiesList() {
                 />
                 <button onClick={handleAddNoties}>Add Noties</button>
             </div>
+
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
 
             <div className="assignment-cards">
                 {notises.length > 0 ? (
@@ -194,6 +212,9 @@ function NotiesList() {
                                 placeholder="New Notise Category"
                                 style={customStyles.input}
                             />
+
+                            {errorMessage && <p className="error-message">{errorMessage}</p>}
+
                             <div style={customStyles.buttonContainer}>
                                 <button onClick={() => handleUpdateNoties(newNotiesTitle, newNotiesDescription, newNewNotiesCategory)} style={customStyles.button}>Update Notice</button>
                                 <button onClick={closeModal} style={customStyles.cancelButton}>Cancel</button>

@@ -13,6 +13,7 @@ function CourseList() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [courseToUpdate, setCourseToUpdate] = useState(null);
     const token = localStorage.getItem('token');
+    const [errorMessage, setErrorMessage] = useState('');
 
     // Fetch courses on component mount
     useEffect(() => {
@@ -36,6 +37,13 @@ function CourseList() {
 
     // Handle adding a new course
     const handleAddCourse = async () => {
+
+        if (!newCourseTitle || !newCourseDescription || !newCourseModules) {
+            setErrorMessage('Please fill in all fields before adding the course.');
+            return;
+        }
+        setErrorMessage('');
+
         const modulesArray = newCourseModules.split(',').map(module => module.trim());
         const newCourse = { title: newCourseTitle, description: newCourseDescription, modules: modulesArray };
         try {
@@ -98,6 +106,13 @@ function CourseList() {
 
     // Handle updating a course
     const handleUpdateCourse = async () => {
+
+        if (!newCourseTitle || !newCourseDescription || !newCourseModules) {
+            setErrorMessage('Please fill in all fields before updating the course.');
+            return;
+        }
+        setErrorMessage('');
+
         const updatedCourse = { title: newCourseTitle, description: newCourseDescription, modules: newCourseModules };
         try {
             const response = await fetch('http://localhost:5000/api/course', {
@@ -146,6 +161,8 @@ function CourseList() {
                 <button onClick={handleAddCourse}>Add Course</button>
             </div>
 
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+
             {/* Course Cards */}
             <div className="course-cards">
                 {courses.length > 0 ? (courses.map((course) => (
@@ -191,10 +208,14 @@ function CourseList() {
                                 placeholder="New Course Modules (comma separated)"
                                 style={customStyles.input}
                             />
+
+                            {errorMessage && <p className="error-message">{errorMessage}</p>}
+
                             <div style={customStyles.buttonContainer}>
                                 <button onClick={() => handleUpdateCourse(newCourseTitle, newCourseDescription, newCourseModules)} style={customStyles.button}>Update Course</button>
                                 <button onClick={closeModal} style={customStyles.cancelButton}>Cancel</button>
                             </div>
+
                         </>
                     )}
                 </div>
